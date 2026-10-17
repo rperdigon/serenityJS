@@ -1,7 +1,5 @@
 import { Task } from '@serenity-js/core';
-import { Click, Enter } from '@serenity-js/web';
-
-import { LoginPage } from '../pages';
+import { By, Click, Enter, PageElement } from '@serenity-js/web';
 
 /**
  * This is called a "Task".
@@ -16,9 +14,25 @@ import { LoginPage } from '../pages';
  */
 export const Authenticate = {
     using: (username: string, password: string) =>
-        Task.where(`#actor logs in as ${username}`,
-            Enter.theValue(username).into(LoginPage.usernameField()),
-            Enter.theValue(password).into(LoginPage.passwordField()),
-            Click.on(LoginPage.loginButton()),
+        Task.where(`#actor logs in as ${ username }`,
+            Enter.theValue(username).into(LoginForm.usernameField()),
+            Enter.theValue(password).into(LoginForm.passwordField()),
+            Click.on(LoginForm.loginButton()),
         ),
+}
+
+/**
+ * This is called a "Lean Page Object".
+ * Lean Page Objects describe interactive elements of a widget.
+ * In this case, the login form widget at https://the-internet.herokuapp.com/login
+ */
+const LoginForm = {
+    usernameField: () =>
+        PageElement.located(By.id('username')).describedAs('username field'),
+
+    passwordField: () =>
+        PageElement.located(By.id('password')).describedAs('password field'),
+
+    loginButton: () =>
+        PageElement.located(By.css('button[type="submit"]')).describedAs('login button'),
 }
