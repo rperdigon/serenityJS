@@ -11,10 +11,10 @@ const timeouts = {
     },
     playwright: {
         defaultNavigationTimeout: Duration.ofSeconds(10),   // how long to wait for a page to load
-        defaultTimeout:           Duration.ofSeconds(5),    // how long to wait for an element to show up
+        defaultTimeout: Duration.ofSeconds(5),    // how long to wait for an element to show up
     },
     serenity: {
-        cueTimeout:               Duration.ofSeconds(5),    // how long to wait for Serenity/JS to complete any post-test activities, like saving screenshots and reports
+        cueTimeout: Duration.ofSeconds(5),    // how long to wait for Serenity/JS to complete any post-test activities, like saving screenshots and reports
     }
 }
 
@@ -37,7 +37,7 @@ BeforeAll(async () => {
         actors: new Actors(
             browser,
             {
-                baseURL: 'https://the-internet.herokuapp.com/',
+                baseURL: 'https://the-internet.herokuapp.com/login',
             },
             {
                 defaultNavigationTimeout: timeouts.playwright.defaultNavigationTimeout.inMilliseconds(),
@@ -47,12 +47,12 @@ BeforeAll(async () => {
 
         // Configure Serenity/JS reporting services
         crew: [
-            [ '@serenity-js/console-reporter', { theme: 'auto' } ],
-            [ '@serenity-js/web:Photographer', {
+            ['@serenity-js/console-reporter', { theme: 'auto' }],
+            ['@serenity-js/web:Photographer', {
                 // strategy: 'TakePhotosOfInteractions',    // capture screenshots of all the interactions; slower but more comprehensive
                 strategy: 'TakePhotosOfFailures',           // capture screenshots of failed interactions; much faster
-            } ],
-            [ '@serenity-js/html-reporter', { specDirectory: path.resolve(__dirname, '../../features') } ],
+            }],
+            ['@serenity-js/html-reporter', { specDirectory: path.resolve(__dirname, '../../features') }],
         ],
 
         cueTimeout: timeouts.serenity.cueTimeout,
