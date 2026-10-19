@@ -1,0 +1,70 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Cucumber: todos los tests (headed)",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/@cucumber/cucumber/bin/cucumber.js",
+            "args": [],
+            "env": {
+                "HEADLESS": "false",
+                "PWDEBUG": "0"
+            },
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": [
+                "<node_internals>/**",
+                "${workspaceFolder}/node_modules/**"
+            ]
+        },
+        {
+            "name": "Cucumber: feature abierto (headed)",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/@cucumber/cucumber/bin/cucumber.js",
+            "args": [
+                "${relativeFile}"
+            ],
+            "env": {
+                "HEADLESS": "false"
+            },
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": [
+                "<node_internals>/**",
+                "${workspaceFolder}/node_modules/**"
+            ]
+        },
+        {
+            "name": "Cucumber: por tag (headed)",
+            "type": "node",
+            "request": "launch",
+            "program": "${workspaceFolder}/node_modules/@cucumber/cucumber/bin/cucumber.js",
+            "args": [
+                "--tags",
+                "${input:tag}"
+            ],
+            "env": {
+                "HEADLESS": "false"
+            },
+            "cwd": "${workspaceFolder}",
+            "console": "integratedTerminal",
+            "internalConsoleOptions": "neverOpen",
+            "skipFiles": [
+                "<node_internals>/**",
+                "${workspaceFolder}/node_modules/**"
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "id": "tag",
+            "type": "promptString",
+            "description": "Tag a ejecutar (ej: @smoke)",
+            "default": "@smoke"
+        }
+    ]
+}
