@@ -4,6 +4,7 @@ import { Navigate } from '@serenity-js/web';
 
 import { Authenticate, VerifyAuthentication } from '../../test/authentication';
 import { PickExample } from '../../test/examples';
+import { SetCurrentPage } from '../../test/pages/factory/PageFactory';
 
 /**
  * Below step definitions use Cucumber Expressions
@@ -14,6 +15,7 @@ import { PickExample } from '../../test/examples';
 Given('{actor} starts with the {string} example', async (actor: Actor, exampleName: string) =>
     actor.attemptsTo(
         Navigate.to('/'),
+        SetCurrentPage.to('Login'),
         PickExample.called(exampleName),
     )
 );
@@ -36,4 +38,3 @@ Then(/.* should see that authentication has (succeeded|failed)/, async (expected
         VerifyAuthentication[expectedOutcome](),
     )
 );
-
