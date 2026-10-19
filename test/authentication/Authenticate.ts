@@ -1,5 +1,7 @@
 import { Task } from '@serenity-js/core';
-import { By, Click, Enter, PageElement } from '@serenity-js/web';
+import { Click, Enter } from '@serenity-js/web';
+
+import { PageFactory } from '../pages/factory/PageFactory';
 
 /**
  * This is called a "Task".
@@ -10,29 +12,21 @@ import { By, Click, Enter, PageElement } from '@serenity-js/web';
  * - enter password
  * - click on the login button
  *
- * This sequence of activities together means to "log in"
+ * This sequence of activities together means to "log in".
+ * Locators are resolved at runtime from the active page via PageFactory,
+ * using the string keys registered in each Page Object (e.g. LoginPage).
  */
 export const Authenticate = {
     using: (username: string, password: string) =>
         Task.where(`#actor logs in as ${ username }`,
-            Enter.theValue(username).into(LoginForm.usernameField()),
-            Enter.theValue(password).into(LoginForm.passwordField()),
-            Click.on(LoginForm.loginButton()),
+            Enter.theValue(username).into(
+                PageFactory.getCurrentPage().getElement('usernameField')
+            ),
+            Enter.theValue(password).into(
+                PageFactory.getCurrentPage().getElement('passwordField')
+            ),
+            Click.on(
+                PageFactory.getCurrentPage().getElement('loginButton')
+            ),
         ),
-}
-
-/**
- * This is called a "Lean Page Object".
- * Lean Page Objects describe interactive elements of a widget.
- * In this case, the login form widget at https://the-internet.herokuapp.com/login
- */
-const LoginForm = {
-    usernameField: () =>
-        PageElement.located(By.id('username')).describedAs('username field'),
-
-    passwordField: () =>
-        PageElement.located(By.id('password')).describedAs('password field'),
-
-    loginButton: () =>
-        PageElement.located(By.css('button[type="submit"]')).describedAs('login button'),
-}
+};
