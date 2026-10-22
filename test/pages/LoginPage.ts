@@ -1,4 +1,5 @@
 import { AbstractPage } from './factory/AbstractPage';
+import { TEXT_BASE } from '../Constants';
 
 export class LoginPage extends AbstractPage {
     constructor() {
@@ -7,7 +8,7 @@ export class LoginPage extends AbstractPage {
             ['usernameField']: '#username',
             ['passwordField']: '#password',
             ['loginButton']: 'button[type="submit"]',
-            ['Login']: 'button[type="submit"]',
+            [TEXT_BASE.LOGIN]: '#login',
         });
     }
 }
