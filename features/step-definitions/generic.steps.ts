@@ -1,5 +1,5 @@
 import { Given, Then } from '@cucumber/cucumber';
-import { Ensure } from '@serenity-js/assertions';
+import { Ensure, equals, includes } from '@serenity-js/assertions';
 import { Actor, actorInTheSpotlight } from '@serenity-js/core';
 import { isVisible, Navigate } from '@serenity-js/web';
 
@@ -23,11 +23,46 @@ Given('{actor} go to web {string}', async (actor: Actor, url: string) =>
  * @example Then I should see "loginButton" element
  */
 Then('check to {string} has loaded', async (page: string) => {
+    PageFactory.setCurrentPage(page);
     await actorInTheSpotlight().attemptsTo(
         SetCurrentPage.to(page),
         Ensure.that(
             PageFactory.getCurrentPage().getElement(page),
             isVisible(),
+        ),
+    );
+});
+
+/**
+ * Verifies that an element's text contains the expected value.
+ * Supports special tags like [empty] or [blank].
+ * @param {string} element - Element locator key or identifier.
+ * @param {string} text - Expected text value.
+ * @example Then verify the text element "title" is "Welcome"
+ */
+Then('verify the text element {string} include {string}', async (element: string, text: string) => {
+    await actorInTheSpotlight().attemptsTo(
+        // Log.the(PageFactory.getCurrentPage().getElement(element).text()),//enable to debug
+        Ensure.that(
+            PageFactory.getCurrentPage().getElement(element).text(),
+            includes(text),
+        ),
+    );
+});
+
+/**
+ * Verifies that an element's text exactly equals the expected value.
+ * Supports special tags like [empty] or [blank].
+ * @param {string} element - Element locator key or identifier.
+ * @param {string} text - Expected text value.
+ * @example Then verify the text element "title" is "Welcome"
+ */
+Then('verify the text element {string} is {string}', async (element: string, text: string) => {
+    await actorInTheSpotlight().attemptsTo(
+        // Log.the(PageFactory.getCurrentPage().getElement(element).text()),//enable to debug
+        Ensure.that(
+            PageFactory.getCurrentPage().getElement(element).text(),
+            equals(text),
         ),
     );
 });
