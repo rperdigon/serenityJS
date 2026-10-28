@@ -7,7 +7,8 @@
     "test": "cucumber-js",
     "test:report": "npx @serenity-js/html-reporter serve --dir ./reports/serenity-js --open",
     "lint": "eslint --ext ts --config .eslintrc.js .",
-    "lint:fix": "npm run lint -- --fix"
+    "lint:fix": "npm run lint -- --fix",
+    "add:constant": "ts-node pageContantsHelper/add-constant.ts"
   },
   "repository": {
     "type": "git",
