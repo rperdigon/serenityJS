@@ -1,6 +1,6 @@
 import { Given, Then } from '@cucumber/cucumber';
 import { Ensure, equals, includes } from '@serenity-js/assertions';
-import { Actor, actorInTheSpotlight } from '@serenity-js/core';
+import { Actor, actorInTheSpotlight, AssertionError } from '@serenity-js/core';
 import { isVisible, Navigate } from '@serenity-js/web';
 
 import { PageFactory, SetCurrentPage } from '../../test/pages/factory/PageFactory';
@@ -29,7 +29,7 @@ Then('check to {string} has loaded', async (page: string) => {
         Ensure.that(
             PageFactory.getCurrentPage().getElement(page),
             isVisible(),
-        ),
+        ).otherwiseFailWith(AssertionError, 'Page ' + page + ' has not loaded.'),
     );
 });
 
