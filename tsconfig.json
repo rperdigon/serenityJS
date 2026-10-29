@@ -16,7 +16,8 @@
 
   "include": [
     "features/**/*.ts",
-    "test/**/*.ts"
+    "test/**/*.ts",
+    "pageContantsHelper/**/*.ts"
   ],
 
   "exclude": [
