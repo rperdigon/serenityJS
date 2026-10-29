@@ -4,6 +4,7 @@ import { AbstractPage } from './factory/AbstractPage';
 export class SecureAreaPage extends AbstractPage {
     constructor() {
         super({
+            // Element mapping for SecureArea
             [TEXT_BASE.SECURE_AREA]: '#content',
             ['advice']: '#flash',
             ['welcome message']: 'h4.subheader'
