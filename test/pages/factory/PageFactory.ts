@@ -3,8 +3,8 @@ import { randomUUID } from 'crypto';
 
 import { TEXT_BASE } from '../../Constants';
 import { LoginPage } from '../LoginPage';
+import { SecureAreaPage } from '../SecureAreaPage';
 import { AbstractPage } from './AbstractPage';
-import { SecureAreaPage } from "../SecureAreaPage";
 
 // Todo lo que exporta el barrel
 
@@ -22,7 +22,7 @@ export class PageFactory {
     // Static block to register all available pages
     static {
         PageFactory.pageMap.set(TEXT_BASE.LOGIN, new LoginPage());
-    PageFactory.pageMap.set(TEXT_BASE.SECURE_AREA, new SecureAreaPage());
+        PageFactory.pageMap.set(TEXT_BASE.SECURE_AREA, new SecureAreaPage());
     }
 
     /**
