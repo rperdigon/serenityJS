@@ -1,7 +1,7 @@
 import { randomUUID } from 'node:crypto';
 import * as fs from 'node:fs/promises';
 import * as path from 'node:path';
-import { Project, SyntaxKind } from 'ts-morph';
+import { Project, QuoteKind, SyntaxKind } from 'ts-morph';
 
 interface ProjectPaths {
     constantsFilePath: string;
@@ -179,6 +179,9 @@ export class PageScaffoldGenerator {
         // 2. Leer TypeScript mediante su AST.
         const project = new Project({
             skipAddingFilesFromTsConfig: true,
+            manipulationSettings: {
+                quoteKind: QuoteKind.Single,
+            },
         });
 
         const constantsSource =
@@ -192,10 +195,12 @@ export class PageScaffoldGenerator {
 
         const initializer = declaration?.getInitializer();
 
-        const constantsObject = initializer
-            ?.asKind(SyntaxKind.AsExpression)
-            ?.getExpression()
-            .asKind(SyntaxKind.ObjectLiteralExpression);
+        const constantsObject =
+            initializer?.asKind(SyntaxKind.ObjectLiteralExpression) ??
+            initializer
+                ?.asKind(SyntaxKind.AsExpression)
+                ?.getExpression()
+                .asKind(SyntaxKind.ObjectLiteralExpression);
 
         if (!constantsObject) {
             throw new Error(

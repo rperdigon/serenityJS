@@ -4,11 +4,13 @@ export interface PageNames {
 }
 
 export function createPageNames(rawName: string): PageNames {
-    const words =
-        rawName
-            .normalize('NFD')
-            .replace(/[\u0300-\u036f]/g, '')
-            .match(/[A-Za-z0-9]+/g) ?? [];
+    const cleaned = rawName
+        .normalize('NFD')
+        .replace(/[\u0300-\u036f]/g, '')
+        .replace(/([a-z0-9])([A-Z])/g, '$1 $2')
+        .replace(/([A-Z]+)([A-Z][a-z])/g, '$1 $2');
+
+    const words = cleaned.match(/[A-Za-z0-9]+/g) ?? [];
 
     if (words.length === 0) {
         throw new Error(
@@ -16,13 +18,13 @@ export function createPageNames(rawName: string): PageNames {
         );
     }
 
-    const pascalName = words
-        .map(
-            (word) =>
-                word.charAt(0).toUpperCase() +
-                word.slice(1).toLowerCase(),
-        )
-        .join('');
+    const pascalWords = words.map(
+        (word) =>
+            word.charAt(0).toUpperCase() +
+            word.slice(1).toLowerCase(),
+    );
+
+    const pascalName = pascalWords.join('');
 
     // Evita identificadores de clase que comiencen por un número.
     const classBase = /^\d/.test(pascalName)
@@ -34,7 +36,14 @@ export function createPageNames(rawName: string): PageNames {
         ? classBase
         : `${classBase}Page`;
 
-    let constantKey = words
+    // Si el usuario especificó "Page" al final de un nombre compuesto,
+    // se omite en la clave de constante (ej: LoginPage -> LOGIN).
+    const constantWords =
+        words.length > 1 && words[words.length - 1].toLowerCase() === 'page'
+            ? words.slice(0, -1)
+            : words;
+
+    let constantKey = constantWords
         .map((word) => word.toUpperCase())
         .join('_');
 

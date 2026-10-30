@@ -99,12 +99,13 @@ npm run test:report
 
 The project provides several [NPM scripts](https://docs.npmjs.com/cli/v6/using-npm/scripts) defined in [`package.json`](package.json):
 
-```
+```shell
 npm run lint            # runs code linter
 npm run lint:fix        # attempts to automatically fix linting issues
 npm test                # executes the example test suite
                         # and generates the report under ./reports/serenity-js
 npm run test:report     # serves the test report and opens it in the browser
+npm run add:constant    # scaffolds a new Page Object, registers it in PageFactory, and updates Constants
 ```
 
 ### Test execution modes
@@ -125,6 +126,33 @@ HEADLESS=false npm test
 # Run tests with different configuration
 npm test -- --profile <profile-name>
 ```
+
+### Scaffolding new Page Objects and constants
+
+This project includes an automated interactive CLI helper to scaffold new Page Objects and wire them into the Page Object Model (POM) architecture.
+
+Run the generator:
+
+```shell
+npm run add:constant
+```
+
+#### Interactive prompts:
+1. **`¿Qué nombre tendrá la página?:`** (e.g. `Checkout` or `User Profile`)
+   * Generates the class name (e.g. `CheckoutPage`) and the constant key (e.g. `CHECKOUT`).
+2. **`¿Qué texto mostrará <KEY>?:`** (e.g. `Checkout`)
+   * The text value associated with this page in `TEXT_BASE` (and referenced in Cucumber steps such as `SetCurrentPage.to('Checkout')`).
+3. **`¿Qué selector CSS/XPath tendrá <PageClassName>?:`** (e.g. `#checkout-container` or `//div[@id="main"]`)
+   * The root or primary selector for the page.
+
+#### Files created and modified:
+* **Created:** [`test/pages/<PageName>Page.ts`](test/pages/) extending `AbstractPage`.
+* **Updated:** [`test/Constants.ts`](test/Constants.ts) with the new entry in `TEXT_BASE`.
+* **Updated:** [`test/pages/factory/PageFactory.ts`](test/pages/factory/PageFactory.ts) with the new page import and registration in `PageFactory.pageMap`.
+
+For more details on how the POM architecture works, see:
+* [POM Architecture Guide (English)](test/pages/PomArchitectureEN.md)
+* [Guía de Arquitectura POM (Español)](test/pages/PomArchitectureES.md)
 
 ## Project Structure
 
@@ -254,4 +282,3 @@ Need dedicated support, training, or consulting for your team?
 - 🤝 **Corporate Support** - Dedicated technical support and SLA-backed assistance
 - 🏗️ **Architecture Reviews** - Expert guidance on test automation strategy and implementation
 - 📊 **Corporate Sponsorship** - Tailored partnership opportunities for organizations
-
