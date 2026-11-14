@@ -5,6 +5,7 @@ import { TEXT_BASE } from '../../Constants';
 import { LoginPage } from '../LoginPage';
 import { SecureAreaPage } from '../SecureAreaPage';
 import { AbstractPage } from './AbstractPage';
+import { BasicAuthPage } from '../BasicAuthPage';
 
 // Todo lo que exporta el barrel
 
@@ -23,6 +24,7 @@ export class PageFactory {
     static {
         PageFactory.pageMap.set(TEXT_BASE.LOGIN, new LoginPage());
         PageFactory.pageMap.set(TEXT_BASE.SECURE_AREA, new SecureAreaPage());
+    PageFactory.pageMap.set(TEXT_BASE.BASIC_AUTH, new BasicAuthPage());
     }
 
     /**
