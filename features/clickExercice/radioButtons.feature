@@ -4,7 +4,6 @@ Feature: Radio buttons
   Background:
     Given Alice go to web "https://the-internet.herokuapp.com/radio_buttons"
 
-  @toDo
   Scenario Outline: Using username and password to log in
     The herokuapp provides a simple example of form based authentication
     In order to get access to the protected resource
