@@ -1,7 +1,7 @@
-import { Given, Then } from '@cucumber/cucumber';
+import { Given, Then, When } from '@cucumber/cucumber';
 import { Ensure, equals, includes } from '@serenity-js/assertions';
 import { Actor, actorInTheSpotlight, AssertionError } from '@serenity-js/core';
-import { isVisible, Navigate } from '@serenity-js/web';
+import { Click, isVisible, Navigate } from '@serenity-js/web';
 
 import { PageFactory, SetCurrentPage } from '../../test/pages/factory/PageFactory';
 
@@ -64,5 +64,38 @@ Then('verify the text element {string} is {string}', async (element: string, tex
             PageFactory.getCurrentPage().getElement(element).text(),
             equals(text),
         ),
+    );
+});
+
+/**
+ * Clicks on a named element on the current page.
+ * @param {string} elementName - The locator key registered in the current page object.
+ * @example When I click on "loginButton"
+ */
+When('click on {string}', async (element: string) => {
+    await actorInTheSpotlight().attemptsTo(
+        Click.on(PageFactory.getCurrentPage().getElement(element))
+    );
+});
+
+/**
+ * Selects a radio button by clicking on it.
+ * @param {string} element - The locator key registered in the current page object.
+ * @example When select radio button "genderRadio"
+ */
+When('select radio button {string}', async (element: string) => {
+    await actorInTheSpotlight().attemptsTo(
+        Click.on(PageFactory.getCurrentPage().getElement(element)),
+    );
+});
+
+/**
+ * Selects a checkbox by clicking on it.
+ * @param {string} element - The locator key registered in the current page object.
+ * @example When select checkbox "rememberMeCheckbox"
+ */
+When('select checkbox {string}', async (element: string) => {
+    await actorInTheSpotlight().attemptsTo(
+        Click.on(PageFactory.getCurrentPage().getElement(element)),
     );
 });
