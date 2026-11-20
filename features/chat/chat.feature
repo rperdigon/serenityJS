@@ -1,15 +1,14 @@
-Feature: Chat
+Feature: Radio buttons
     Chat feature using the herokuapp website
 
   Background:
     Given Alice go to web "https://the-internet.herokuapp.com/chat"
 
   @toDo
-  Scenario Outline: Using username and password to log in
-    The herokuapp provides a simple example of form based authentication
+  Scenario Outline: The user can chat with other users
     In order to get access to the protected resource
     As a user with the correct credentials
-    I'd like to be able to log in using my username and password
+    I'd like to be able to chat with other users
 
     Then check to "Chat" has loaded
     Then verify the text element "Room" include "lobby"
