@@ -7,6 +7,7 @@ import { SecureAreaPage } from '../SecureAreaPage';
 import { AbstractPage } from './AbstractPage';
 import { BasicAuthPage } from '../BasicAuthPage';
 import { RadioButtonsPage } from '../RadioButtonsPage';
+import { ChatPage } from '../ChatPage';
 
 // Todo lo que exporta el barrel
 
@@ -27,6 +28,7 @@ export class PageFactory {
         PageFactory.pageMap.set(TEXT_BASE.SECURE_AREA, new SecureAreaPage());
     PageFactory.pageMap.set(TEXT_BASE.BASIC_AUTH, new BasicAuthPage());
     PageFactory.pageMap.set(TEXT_BASE.RADIO_BUTTONS, new RadioButtonsPage());
+    PageFactory.pageMap.set(TEXT_BASE.CHAT, new ChatPage());
     }
 
     /**
