@@ -34,6 +34,10 @@ BeforeAll(async () => {
             browser,
             {
                 baseURL: 'https://the-internet.herokuapp.com/login',
+                viewport: {
+                    width: 1920,
+                    height: 1080,
+                },
             },
             {
                 defaultNavigationTimeout: timeouts.playwright.defaultNavigationTimeout.inMilliseconds(),
